@@ -95,9 +95,19 @@ public class HomeAdmin extends javax.swing.JFrame {
                 "Book Code", "Book Title", "Author", "Synopsis", "Number of Pages"
             }
         ));
+        bukuTable.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                bukuTableFocusGained(evt);
+            }
+        });
         bukuTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 bukuTableMouseClicked(evt);
+            }
+        });
+        bukuTable.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                bukuTableComponentShown(evt);
             }
         });
         jScrollPane1.setViewportView(bukuTable);
@@ -136,6 +146,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         taSinopsis.setRows(5);
         jScrollPane2.setViewportView(taSinopsis);
 
+        jButton1.setBackground(new java.awt.Color(102, 81, 61));
+        jButton1.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Load/Refresh Data");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -228,7 +241,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
