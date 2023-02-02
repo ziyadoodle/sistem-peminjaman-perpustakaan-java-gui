@@ -56,7 +56,7 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Belum Punya Akun?");
 
-        bDaftar.setBackground(new java.awt.Color(255, 255, 0));
+        bDaftar.setBackground(new java.awt.Color(255, 204, 204));
         bDaftar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         bDaftar.setText("Daftar Sekarang");
 
