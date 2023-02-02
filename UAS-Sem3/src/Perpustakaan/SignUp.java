@@ -42,14 +42,14 @@ public class SignUp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 237, 219));
 
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         jLabel1.setText("Username");
 
-        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         jLabel2.setText("Password");
 
         bSignUp.setBackground(new java.awt.Color(102, 81, 61));
-        bSignUp.setFont(new java.awt.Font("Comic Sans MS", 0, 16)); // NOI18N
+        bSignUp.setFont(new java.awt.Font("Berlin Sans FB", 0, 16)); // NOI18N
         bSignUp.setForeground(new java.awt.Color(255, 255, 255));
         bSignUp.setText("Create Account");
         bSignUp.addActionListener(new java.awt.event.ActionListener() {
@@ -58,13 +58,14 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 24)); // NOI18N
         jLabel3.setText("Create an account");
 
+        jLabel4.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         jLabel4.setText("Already have an account?");
 
         bLogIn.setBackground(new java.awt.Color(102, 81, 61));
-        bLogIn.setFont(new java.awt.Font("Comic Sans MS", 0, 14)); // NOI18N
+        bLogIn.setFont(new java.awt.Font("Berlin Sans FB", 0, 14)); // NOI18N
         bLogIn.setForeground(new java.awt.Color(255, 255, 255));
         bLogIn.setText("Log in");
         bLogIn.addActionListener(new java.awt.event.ActionListener() {
@@ -100,7 +101,7 @@ public class SignUp extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap(54, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
