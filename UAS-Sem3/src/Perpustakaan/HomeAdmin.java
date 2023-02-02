@@ -354,8 +354,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_bClearActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
-
-        if (JOptionPane.showConfirmDialog(null, "Betul mau dihapus ?") == JOptionPane.OK_OPTION) {
+        if (JOptionPane.showConfirmDialog(null, "Are you sure ?") == JOptionPane.OK_OPTION) {
             try {
                 conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
                 stmt = conn.createStatement();
@@ -363,8 +362,6 @@ public class HomeAdmin extends javax.swing.JFrame {
                 while (rs.next()) {
                     int id = rs.getInt("id");
                     String kode = rs.getString("kode_buku");
-                    System.out.println(id);
-                    System.out.println(kode);
                     if (id == id && tfKodeBuku.getText().equals(kode)) {
                         String query = "DELETE FROM buku WHERE id=" + id;
                         ps = conn.prepareStatement(query); 

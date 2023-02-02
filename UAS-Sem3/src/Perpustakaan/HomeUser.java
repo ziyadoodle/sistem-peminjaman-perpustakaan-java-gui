@@ -1,20 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Perpustakaan;
 
-/**
- *
- * @author User
- */
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+
 public class HomeUser extends javax.swing.JFrame {
 
-    /**
-     * Creates new form home
-     */
+    String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
+    Statement stmt = null;
+    PreparedStatement ps = null;
+    Connection conn = null;
+    ResultSet rs;
+
+    DefaultTableModel tabelModel;
+    boolean statusEdit = false;
+    int activeRow = 0;
+
     public HomeUser() {
         initComponents();
+        tabelModel = new DefaultTableModel();
+        tabelModel.addColumn("Book Code");
+        tabelModel.addColumn("Book Title");
+        tabelModel.addColumn("Author");
+        tabelModel.addColumn("Synopsis");
+        tabelModel.addColumn("Number of Pages");
+        booksData.setModel(tabelModel);
     }
 
     /**
@@ -31,8 +40,8 @@ public class HomeUser extends javax.swing.JFrame {
         booksData = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        bLoad = new javax.swing.JButton();
+        bBorrow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +58,11 @@ public class HomeUser extends javax.swing.JFrame {
                 "Book Code", "Book Title", "Author", "Synopsis", "Number of Pages"
             }
         ));
+        booksData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                booksDataMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(booksData);
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 26)); // NOI18N
@@ -57,15 +71,25 @@ public class HomeUser extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         jLabel2.setText("3000 Library");
 
-        jButton1.setBackground(new java.awt.Color(102, 81, 61));
-        jButton1.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Load/Refresh Data");
+        bLoad.setBackground(new java.awt.Color(102, 81, 61));
+        bLoad.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        bLoad.setForeground(new java.awt.Color(255, 255, 255));
+        bLoad.setText("Load/Refresh Data");
+        bLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLoadActionPerformed(evt);
+            }
+        });
 
-        jButton2.setBackground(new java.awt.Color(102, 81, 61));
-        jButton2.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Borrow");
+        bBorrow.setBackground(new java.awt.Color(102, 81, 61));
+        bBorrow.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
+        bBorrow.setForeground(new java.awt.Color(255, 255, 255));
+        bBorrow.setText("Borrow");
+        bBorrow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBorrowActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -82,9 +106,9 @@ public class HomeUser extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addComponent(bLoad))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(bBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 29, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -94,12 +118,12 @@ public class HomeUser extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bLoad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
 
@@ -116,6 +140,37 @@ public class HomeUser extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void bLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoadActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM buku");
+
+            while (rs.next()) {
+                String kode = rs.getString("kode_buku");
+                String judul = rs.getString("judul");
+                String pengarang = rs.getString("pengarang");
+                String sinopsis = rs.getString("sinopsis");
+                String jml = String.valueOf(rs.getInt("jml_halaman"));
+
+                String bukuTbl[] = {kode, judul, pengarang, sinopsis, jml};
+
+                tabelModel.addRow(bukuTbl);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_bLoadActionPerformed
+
+    private void bBorrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrowActionPerformed
+           new Borrow().setVisible(true);
+    }//GEN-LAST:event_bBorrowActionPerformed
+
+    private void booksDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksDataMouseClicked
+        
+    }//GEN-LAST:event_booksDataMouseClicked
 
     /**
      * @param args the command line arguments
@@ -154,9 +209,9 @@ public class HomeUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bBorrow;
+    private javax.swing.JButton bLoad;
     private javax.swing.JTable booksData;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
