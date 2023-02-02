@@ -263,16 +263,16 @@ public class HomeAdmin extends javax.swing.JFrame {
                     taSinopsis.getText(),
                     tfJmlHal.getText()
                 });
-//                try {
-//                    conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
-//                    stmt = conn.createStatement();
-//                    rs = stmt.executeQuery("SELECT * FROM buku");
-//                    int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
-//                    stmt.close();
-//                    conn.close();
-//                } catch (SQLException e) {
-//                    System.out.println(e.getMessage());
-//                }
+                try {
+                    conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+                    stmt = conn.createStatement();
+                    rs = stmt.executeQuery("SELECT * FROM buku");
+                    int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         } else {
             tabelModel.setValueAt(tfKodeBuku.getText(), activeRow, 0);
@@ -280,14 +280,7 @@ public class HomeAdmin extends javax.swing.JFrame {
             tabelModel.setValueAt(tfPengarang.getText(), activeRow, 2);
             tabelModel.setValueAt(taSinopsis.getText(), activeRow, 3);
             tabelModel.setValueAt(tfJmlHal.getText(), activeRow, 4);
-            
-            int row = bukuTable.getSelectedRow();
-//            String kodeBuku = bukuTable.getValueAt(row, 0).toString();
-//            String judulBuku = bukuTable.getValueAt(row, 1).toString();
-//            String pengarang = bukuTable.getValueAt(row, 2).toString();
-//            String sinopsis = bukuTable.getValueAt(row, 3).toString();
-//            String jmlHal = bukuTable.getValueAt(row, 4).toString();
-            String a = tfJudulBuku.getText();
+
             try {
                 conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
                 stmt = conn.createStatement();
@@ -296,7 +289,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                     String query = "UPDATE buku " + "SET kode_buku=?,judul=?,pengarang=?,sinopsis=?,jml_halaman=? WHERE id=" + rs.getInt("id");
                     ps = conn.prepareStatement(query);
                     ps.setString(1, tfKodeBuku.getText());
-                    ps.setString(2, a);
+                    ps.setString(2, tfJudulBuku.getText());
                     ps.setString(3, tfPengarang.getText());
                     ps.setString(4, taSinopsis.getText());
                     ps.setString(5, tfJmlHal.getText());
@@ -326,7 +319,7 @@ public class HomeAdmin extends javax.swing.JFrame {
             String pengarang = bukuTable.getValueAt(row, 2).toString();
             String sinopsis = bukuTable.getValueAt(row, 3).toString();
             String jmlHal = bukuTable.getValueAt(row, 4).toString();
-            
+
             tfKodeBuku.setText(kodeBuku);
             tfJudulBuku.setText(judulBuku);
             tfPengarang.setText(pengarang);
@@ -348,7 +341,29 @@ public class HomeAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_bClearActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
+
         if (JOptionPane.showConfirmDialog(null, "Betul mau dihapus ?") == JOptionPane.OK_OPTION) {
+            try {
+                conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery("SELECT * FROM buku");
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String kode = rs.getString("kode_buku");
+                    System.out.println(id);
+                    System.out.println(kode);
+                    if (id == id && tfKodeBuku.getText().equals(kode)) {
+                        String query = "DELETE FROM buku WHERE id=" + id;
+                        ps = conn.prepareStatement(query); 
+                    }
+                }
+                ps.executeUpdate();
+                conn.close();
+                ps.close();
+                rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
             tabelModel.removeRow(activeRow);
             clearInput();
             statusEdit = false;
