@@ -4,11 +4,10 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class SignUp extends javax.swing.JFrame {
-    
+
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
     String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     Statement stmt = null;
-//    PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
@@ -141,22 +140,32 @@ public class SignUp extends javax.swing.JFrame {
     private void bSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSignUpActionPerformed
         String username = tfUsername.getText();
         String password = tfPassword.getText();
-        
+
         try {
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM user");
-            
-//            if (rs.next()) {
-//                if ()
-//            }
-            
-            int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
-            
-            JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
-            tfUsername.setText("");
-            tfPassword.setText("");
-            
+
+            boolean exist = false;
+
+            while (rs.next()) {
+                String uname = rs.getString("username");
+                String pass = rs.getString("password");
+
+                if ((username.equals(uname)) && (password.equals(pass))) {
+                    exist = true;
+                    JOptionPane.showMessageDialog(null, "Username and Password exist!");
+                }
+
+            }
+            rs.close();
+            if (!exist) {
+                int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
+
+                JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
+                tfUsername.setText("");
+                tfPassword.setText("");
+            }
             stmt.close();
             conn.close();
         } catch (SQLException e) {
