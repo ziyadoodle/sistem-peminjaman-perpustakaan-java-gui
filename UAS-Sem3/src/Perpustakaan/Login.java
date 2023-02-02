@@ -59,6 +59,11 @@ public class Login extends javax.swing.JFrame {
         bDaftar.setBackground(new java.awt.Color(255, 204, 204));
         bDaftar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         bDaftar.setText("Daftar Sekarang");
+        bDaftar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDaftarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Username");
 
@@ -177,38 +182,15 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bLoginActionPerformed
 
+    private void bDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDaftarActionPerformed
+        this.dispose();
+        new SignUp().setVisible(true);
+    }//GEN-LAST:event_bDaftarActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-//        String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan";
-//        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-//        Statement stmt = null;
-//        PreparedStatement ps = null;
-//        Connection conn = null;
-//        ResultSet rs;
-//
-//        try {
-//
-//            Class.forName(JDBC_DRIVER);
-//
-//            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
-//            stmt = conn.createStatement();
-//
-//            rs = stmt.executeQuery("SELECT * FROM user");
-//
-//            while (rs.next()) {
-//                String username = rs.getString("username");
-//                String password = rs.getString("password");
-//                String pos = rs.getString("position");
-//                System.out.println(username + " " + password + " " + pos);
-//            }
-//            stmt.close();
-//            conn.close();
-//        } catch (ClassNotFoundException | SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
