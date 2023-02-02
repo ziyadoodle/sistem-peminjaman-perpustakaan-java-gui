@@ -19,11 +19,11 @@ public class HomeAdmin extends javax.swing.JFrame {
     public HomeAdmin() {
         initComponents();
         tabelModel = new DefaultTableModel();
-        tabelModel.addColumn("Kode Buku");
-        tabelModel.addColumn("Judul");
-        tabelModel.addColumn("Pengarang");
-        tabelModel.addColumn("Sinopsis");
-        tabelModel.addColumn("Jumlah Halaman");
+        tabelModel.addColumn("Book Code");
+        tabelModel.addColumn("Book Title");
+        tabelModel.addColumn("Author");
+        tabelModel.addColumn("Synopsis");
+        tabelModel.addColumn("Number of Pages");
         bukuTable.setModel(tabelModel);
     }
 
