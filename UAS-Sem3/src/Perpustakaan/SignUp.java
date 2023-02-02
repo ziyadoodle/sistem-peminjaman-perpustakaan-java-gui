@@ -8,7 +8,7 @@ public class SignUp extends javax.swing.JFrame {
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
     String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     Statement stmt = null;
-    PreparedStatement ps = null;
+//    PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
@@ -143,13 +143,26 @@ public class SignUp extends javax.swing.JFrame {
         String username = tfUsername.getText();
         String password = tfPassword.getText();
         
-//        try {
-//            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
-//            stmt = conn.createStatement();
-//            rs = stmt.executeQuery("SELECT * FROM user");
-//            
-//            int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password) " + "VALUES ('007', 'Bono'), ('008', 'Saras')");
-//        }
+        try {
+            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM user");
+            
+//            if (rs.next()) {
+//                if ()
+//            }
+            
+            int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
+            
+            JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
+            tfUsername.setText("");
+            tfPassword.setText("");
+            
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_bSignUpActionPerformed
 
     /**
