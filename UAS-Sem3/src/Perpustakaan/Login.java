@@ -1,8 +1,16 @@
 package Perpustakaan;
 
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
+
+    String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
+    String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    Statement stmt = null;
+    PreparedStatement ps = null;
+    Connection conn = null;
+    ResultSet rs;
 
     /**
      * Creates new form login
@@ -137,40 +145,70 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
-        this.dispose();
-        new HomeUser().setVisible(true);
+        String username = tfUsername.getText();
+        String password = tfPassword.getText();
+
+        try {
+            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM user");
+            String chk = "SELECT * FROM user WHERE username=? AND password=?";
+            ps = conn.prepareStatement(chk);
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                if ("admin".equals(rs.getString("position"))) {
+                    this.dispose();
+                    new HomeAdmin().setVisible(true);
+                }
+                if ("user".equals(rs.getString("position"))) {
+                    this.dispose();
+                    new HomeUser().setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "invalid username or password", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_bLoginActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan";
-        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-        Statement stmt = null;
-        Connection conn = null;
-        ResultSet rs;
-        
-        try {
-            
-            Class.forName(JDBC_DRIVER);
-            
-            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
-            stmt = conn.createStatement();
-            
-            rs = stmt.executeQuery("SELECT * FROM user");
-            while (rs.next()) {
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                String pos = rs.getString("position");
-                System.out.println(username + " " + password + " " + pos);
-            }
-            stmt.close();
-            conn.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
+//        String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan";
+//        String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+//        Statement stmt = null;
+//        PreparedStatement ps = null;
+//        Connection conn = null;
+//        ResultSet rs;
+//
+//        try {
+//
+//            Class.forName(JDBC_DRIVER);
+//
+//            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+//            stmt = conn.createStatement();
+//
+//            rs = stmt.executeQuery("SELECT * FROM user");
+//
+//            while (rs.next()) {
+//                String username = rs.getString("username");
+//                String password = rs.getString("password");
+//                String pos = rs.getString("position");
+//                System.out.println(username + " " + password + " " + pos);
+//            }
+//            stmt.close();
+//            conn.close();
+//        } catch (ClassNotFoundException | SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
