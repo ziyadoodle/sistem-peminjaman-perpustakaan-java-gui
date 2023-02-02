@@ -6,15 +6,11 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
-    String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     Statement stmt = null;
     PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
-    /**
-     * Creates new form login
-     */
     public Login() {
         initComponents();
     }

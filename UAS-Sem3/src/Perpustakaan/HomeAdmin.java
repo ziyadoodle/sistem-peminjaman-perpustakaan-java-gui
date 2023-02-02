@@ -1,9 +1,15 @@
 package Perpustakaan;
 
+import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class HomeAdmin extends javax.swing.JFrame {
+
+    String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
+    Statement stmt = null;
+    Connection conn = null;
+    ResultSet rs;
 
     DefaultTableModel tabelModel;
     boolean statusEdit = false;
@@ -19,7 +25,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         tabelModel.addColumn("Jumlah Halaman");
         bukuTable.setModel(tabelModel);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +94,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         jScrollPane1.setViewportView(bukuTable);
 
         bDelete.setText("Delete");
+        bDelete.setEnabled(false);
         bDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bDeleteActionPerformed(evt);
@@ -204,7 +211,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void clearInput() {
         tfKodeBuku.setText("");
         tfJudulBuku.setText("");
@@ -223,6 +230,16 @@ public class HomeAdmin extends javax.swing.JFrame {
                     tfJmlHal.getText(),
                     taSinopsis.getText()
                 });
+                try {
+                    conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+                    stmt = conn.createStatement();
+                    rs = stmt.executeQuery("SELECT * FROM buku");
+                    int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
+                }
             }
         } else {
             tabelModel.setValueAt(tfKodeBuku.getText(), activeRow, 0);
@@ -241,7 +258,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void bukuTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bukuTableMouseClicked
         int row = bukuTable.getSelectedRow();
-        
+
         if (row != -1) {
             String kodeBuku = bukuTable.getValueAt(row, 0).toString();
             String judulBuku = bukuTable.getValueAt(row, 1).toString();
