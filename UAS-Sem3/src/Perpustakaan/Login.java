@@ -174,7 +174,6 @@ public class Login extends javax.swing.JFrame {
             ps.setString(1, username);
             ps.setString(2, password);
 
-            rs = ps.executeQuery();
             if (rs.next()) {
                 if ("admin".equals(rs.getString("position"))) {
                     this.dispose();
