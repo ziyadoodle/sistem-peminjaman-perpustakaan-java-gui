@@ -8,6 +8,7 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
     Statement stmt = null;
+    PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
@@ -25,7 +26,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         tabelModel.addColumn("Jumlah Halaman");
         bukuTable.setModel(tabelModel);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,6 +54,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         bClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         taSinopsis = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,13 +136,40 @@ public class HomeAdmin extends javax.swing.JFrame {
         taSinopsis.setRows(5);
         jScrollPane2.setViewportView(taSinopsis);
 
+        jButton1.setText("Load/Refresh Data");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(181, 181, 181))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(38, 38, 38))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
@@ -163,22 +192,6 @@ public class HomeAdmin extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2)
                         .addGap(32, 32, 32))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(181, 181, 181))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(38, 38, 38))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,10 +224,11 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -241,31 +255,59 @@ public class HomeAdmin extends javax.swing.JFrame {
 
     private void bAddUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddUpdateActionPerformed
         if (!statusEdit) {
-            if (!tfKodeBuku.getText().equals("")) {
+            if (!tfKodeBuku.getText().equals("") && !tfJudulBuku.getText().equals("") && !tfPengarang.getText().equals("") && !tfJmlHal.getText().equals("") && !taSinopsis.getText().equals("")) {
                 tabelModel.addRow(new Object[]{
                     tfKodeBuku.getText(),
                     tfJudulBuku.getText(),
                     tfPengarang.getText(),
-                    tfJmlHal.getText(),
-                    taSinopsis.getText()
+                    taSinopsis.getText(),
+                    tfJmlHal.getText()
                 });
-                try {
-                    conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
-                    stmt = conn.createStatement();
-                    rs = stmt.executeQuery("SELECT * FROM buku");
-                    int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
-                    stmt.close();
-                    conn.close();
-                } catch (SQLException e) {
-                    System.out.println(e.getMessage());
-                }
+//                try {
+//                    conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+//                    stmt = conn.createStatement();
+//                    rs = stmt.executeQuery("SELECT * FROM buku");
+//                    int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
+//                    stmt.close();
+//                    conn.close();
+//                } catch (SQLException e) {
+//                    System.out.println(e.getMessage());
+//                }
             }
         } else {
             tabelModel.setValueAt(tfKodeBuku.getText(), activeRow, 0);
             tabelModel.setValueAt(tfJudulBuku.getText(), activeRow, 1);
             tabelModel.setValueAt(tfPengarang.getText(), activeRow, 2);
-            tabelModel.setValueAt(tfJmlHal.getText(), activeRow, 3);
-            tabelModel.setValueAt(taSinopsis.getText(), activeRow, 4);
+            tabelModel.setValueAt(taSinopsis.getText(), activeRow, 3);
+            tabelModel.setValueAt(tfJmlHal.getText(), activeRow, 4);
+            
+            int row = bukuTable.getSelectedRow();
+//            String kodeBuku = bukuTable.getValueAt(row, 0).toString();
+//            String judulBuku = bukuTable.getValueAt(row, 1).toString();
+//            String pengarang = bukuTable.getValueAt(row, 2).toString();
+//            String sinopsis = bukuTable.getValueAt(row, 3).toString();
+//            String jmlHal = bukuTable.getValueAt(row, 4).toString();
+            String a = tfJudulBuku.getText();
+            try {
+                conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+                stmt = conn.createStatement();
+                rs = stmt.executeQuery("SELECT * FROM buku");
+                if (rs.next()) {
+                    String query = "UPDATE buku " + "SET kode_buku=?,judul=?,pengarang=?,sinopsis=?,jml_halaman=? WHERE id=" + rs.getInt("id");
+                    ps = conn.prepareStatement(query);
+                    ps.setString(1, tfKodeBuku.getText());
+                    ps.setString(2, a);
+                    ps.setString(3, tfPengarang.getText());
+                    ps.setString(4, taSinopsis.getText());
+                    ps.setString(5, tfJmlHal.getText());
+                }
+                ps.executeUpdate();
+                conn.close();
+                ps.close();
+                rs.close();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
             clearInput();
             bukuTable.clearSelection();
             statusEdit = false;
@@ -282,13 +324,14 @@ public class HomeAdmin extends javax.swing.JFrame {
             String kodeBuku = bukuTable.getValueAt(row, 0).toString();
             String judulBuku = bukuTable.getValueAt(row, 1).toString();
             String pengarang = bukuTable.getValueAt(row, 2).toString();
-            String jmlHal = bukuTable.getValueAt(row, 3).toString();
-            String sinopsis = bukuTable.getValueAt(row, 4).toString();
+            String sinopsis = bukuTable.getValueAt(row, 3).toString();
+            String jmlHal = bukuTable.getValueAt(row, 4).toString();
+            
             tfKodeBuku.setText(kodeBuku);
             tfJudulBuku.setText(judulBuku);
             tfPengarang.setText(pengarang);
-            tfJmlHal.setText(jmlHal);
             taSinopsis.setText(sinopsis);
+            tfJmlHal.setText(jmlHal);
             statusEdit = true;
             bAddUpdate.setText("Update");
             bDelete.setEnabled(true);
@@ -313,6 +356,29 @@ public class HomeAdmin extends javax.swing.JFrame {
             bDelete.setEnabled(false);
         }
     }//GEN-LAST:event_bDeleteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery("SELECT * FROM buku");
+
+            while (rs.next()) {
+                String kode = rs.getString("kode_buku");
+                String judul = rs.getString("judul");
+                String pengarang = rs.getString("pengarang");
+                String sinopsis = rs.getString("sinopsis");
+                String jml = String.valueOf(rs.getInt("jml_halaman"));
+
+                String bukuTbl[] = {kode, judul, pengarang, sinopsis, jml};
+
+                tabelModel.addRow(bukuTbl);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -351,6 +417,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JButton bClear;
     private javax.swing.JButton bDelete;
     private javax.swing.JTable bukuTable;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
