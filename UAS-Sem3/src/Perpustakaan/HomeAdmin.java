@@ -13,7 +13,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     ResultSet rs;
 
     DefaultTableModel tabelModel;
-    
+
     boolean statusEdit = false;
     int activeRow = 0;
 
@@ -252,17 +252,9 @@ public class HomeAdmin extends javax.swing.JFrame {
     private void bAddUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddUpdateActionPerformed
         if (!statusEdit) {
             if (!tfKodeBuku.getText().equals("") && !tfJudulBuku.getText().equals("") && !tfPengarang.getText().equals("") && !tfJmlHal.getText().equals("") && !taSinopsis.getText().equals("")) {
-                tabelModel.addRow(new Object[]{
-                    tfKodeBuku.getText(),
-                    tfJudulBuku.getText(),
-                    tfPengarang.getText(),
-                    taSinopsis.getText(),
-                    tfJmlHal.getText()
-                });
                 try {
                     conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
                     stmt = conn.createStatement();
-                    rs = stmt.executeQuery("SELECT * FROM buku");
                     int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
                     stmt.close();
                     conn.close();
@@ -270,6 +262,15 @@ public class HomeAdmin extends javax.swing.JFrame {
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }
+                tabelModel.addRow(new Object[]{
+                    tfKodeBuku.getText(),
+                    tfJudulBuku.getText(),
+                    tfPengarang.getText(),
+                    taSinopsis.getText(),
+                    tfJmlHal.getText()
+                });
+            } else {
+                JOptionPane.showMessageDialog(null, "Isi semua data!");
             }
         } else {
             tabelModel.setValueAt(tfKodeBuku.getText(), activeRow, 0);
@@ -329,7 +330,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                     String kode = rs.getString("kode_buku");
                     if (id == id && tfKodeBuku.getText().equals(kode)) {
                         String query = "DELETE FROM buku WHERE id=" + id;
-                        ps = conn.prepareStatement(query); 
+                        ps = conn.prepareStatement(query);
                     }
                 }
                 ps.executeUpdate();
