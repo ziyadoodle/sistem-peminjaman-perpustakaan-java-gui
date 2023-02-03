@@ -2,9 +2,6 @@ package Perpustakaan;
 
 import java.sql.*;
 import javax.swing.JOptionPane;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Borrow extends javax.swing.JFrame {
 
@@ -73,13 +70,11 @@ public class Borrow extends javax.swing.JFrame {
                                     .addComponent(tfNamaPeminjam, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2)))
                             .addComponent(jLabel4)
-                            .addComponent(tfTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(tfTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(270, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(375, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,12 +93,9 @@ public class Borrow extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tfTgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(133, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap(397, Short.MAX_VALUE)
-                    .addComponent(jButton1)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(28, 28, 28))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -128,15 +120,8 @@ public class Borrow extends javax.swing.JFrame {
         try {
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM user");
 
-            boolean existUser = false, existBook = false;
-
-            while (rs.next()) {
-                if (user.equals(rs.getString("username"))) {
-                    existUser = true;
-                }
-            }
+            boolean existBook = false;
             
             rs = stmt.executeQuery("SELECT * FROM buku");
             while (rs.next()) {
@@ -145,17 +130,13 @@ public class Borrow extends javax.swing.JFrame {
                 }
             }
             
-            if(!existUser) {
-                JOptionPane.showMessageDialog(null, "Username is not exist!");
-            }
-            
             if(!existBook) {
                 JOptionPane.showMessageDialog(null, "Books Code is not exist!");
             }
             
-            if(existUser == true && existBook == true) {
+            if(existBook == true) {
                 int hsl = stmt.executeUpdate("INSERT INTO peminjaman " + "(nama_peminjam,kode_buku,tgl_pinjam) " + "VALUES ('" + user + "', '" + kode + "', '" + tgl + "')");
-                JOptionPane.showMessageDialog(null, "ok!");
+                JOptionPane.showMessageDialog(null, "book was successfully borrowed!");
                 tfNamaPeminjam.setText("");
                 tfKodeBuku.setText("");
                 tfTgl.setText("");
@@ -167,9 +148,6 @@ public class Borrow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
