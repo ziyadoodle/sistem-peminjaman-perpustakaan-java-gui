@@ -154,13 +154,18 @@ public class SignUp extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Username and Password exist!");
                 }
             }
-            
-            if (!exist) {
-                int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
 
-                JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
-                tfUsername.setText("");
-                tfPassword.setText("");
+            if (!exist) {
+                if (!username.equals("") && !password.equals("")) {
+                    int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
+
+                    JOptionPane.showMessageDialog(null, "Akun berhasil dibuat!");
+                    tfUsername.setText("");
+                    tfPassword.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Isi semua data!");
+                }
+
             }
             conn.close();
             stmt.close();
