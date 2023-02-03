@@ -164,8 +164,8 @@ public class Login extends javax.swing.JFrame {
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
             stmt = conn.createStatement();
             rs = stmt.executeQuery("SELECT * FROM user");
-            String chk = "SELECT * FROM user WHERE username=? AND password=?";
-            ps = conn.prepareStatement(chk);
+            String query = "SELECT * FROM user WHERE username=? AND password=?";
+            ps = conn.prepareStatement(query);
             ps.setString(1, username);
             ps.setString(2, password);
 
@@ -189,7 +189,7 @@ public class Login extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_bLoginActionPerformed
-
+        
     private void bDaftarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDaftarActionPerformed
         this.dispose();
         new SignUp().setVisible(true);

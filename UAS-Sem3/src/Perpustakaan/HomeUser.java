@@ -7,13 +7,10 @@ public class HomeUser extends javax.swing.JFrame {
 
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
     Statement stmt = null;
-    PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
     DefaultTableModel tabelModel;
-    boolean statusEdit = false;
-    int activeRow = 0;
 
     public HomeUser() {
         initComponents();
@@ -40,10 +37,14 @@ public class HomeUser extends javax.swing.JFrame {
         booksData = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        bLoad = new javax.swing.JButton();
         bBorrow = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 237, 219));
 
@@ -58,11 +59,6 @@ public class HomeUser extends javax.swing.JFrame {
                 "Book Code", "Book Title", "Author", "Synopsis", "Number of Pages"
             }
         ));
-        booksData.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                booksDataMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(booksData);
 
         jLabel1.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 26)); // NOI18N
@@ -70,16 +66,6 @@ public class HomeUser extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 14)); // NOI18N
         jLabel2.setText("3000 Library");
-
-        bLoad.setBackground(new java.awt.Color(102, 81, 61));
-        bLoad.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        bLoad.setForeground(new java.awt.Color(255, 255, 255));
-        bLoad.setText("Load/Refresh Data");
-        bLoad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bLoadActionPerformed(evt);
-            }
-        });
 
         bBorrow.setBackground(new java.awt.Color(102, 81, 61));
         bBorrow.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
@@ -102,11 +88,8 @@ public class HomeUser extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(bLoad))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 29, Short.MAX_VALUE))))
@@ -117,10 +100,8 @@ public class HomeUser extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bLoad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(bBorrow, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,7 +122,11 @@ public class HomeUser extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoadActionPerformed
+    private void bBorrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrowActionPerformed
+        new Borrow().setVisible(true);
+    }//GEN-LAST:event_bBorrowActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
@@ -162,19 +147,8 @@ public class HomeUser extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
-    }//GEN-LAST:event_bLoadActionPerformed
+    }//GEN-LAST:event_formComponentShown
 
-    private void bBorrowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrowActionPerformed
-           new Borrow().setVisible(true);
-    }//GEN-LAST:event_bBorrowActionPerformed
-
-    private void booksDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_booksDataMouseClicked
-        
-    }//GEN-LAST:event_booksDataMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -210,7 +184,6 @@ public class HomeUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBorrow;
-    private javax.swing.JButton bLoad;
     private javax.swing.JTable booksData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

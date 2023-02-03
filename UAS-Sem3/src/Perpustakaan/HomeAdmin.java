@@ -52,11 +52,15 @@ public class HomeAdmin extends javax.swing.JFrame {
         bClear = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         taSinopsis = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         bukuTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 237, 219));
 
@@ -112,16 +116,6 @@ public class HomeAdmin extends javax.swing.JFrame {
         taSinopsis.setRows(5);
         jScrollPane2.setViewportView(taSinopsis);
 
-        jButton1.setBackground(new java.awt.Color(102, 81, 61));
-        jButton1.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Load/Refresh Data");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         bukuTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -133,6 +127,11 @@ public class HomeAdmin extends javax.swing.JFrame {
                 "Book Code", "Book Title", "Author", "Synopsis", "Number of Pages"
             }
         ));
+        bukuTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bukuTableMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(bukuTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -168,9 +167,6 @@ public class HomeAdmin extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane2)
                                 .addGap(32, 32, 32))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane3)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 428, Short.MAX_VALUE)
@@ -212,8 +208,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -337,7 +332,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bDeleteActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
@@ -358,7 +353,27 @@ public class HomeAdmin extends javax.swing.JFrame {
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_formComponentShown
+
+    private void bukuTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bukuTableMouseClicked
+        int row = bukuTable.getSelectedRow();
+        if (row != -1) {
+            String code = bukuTable.getValueAt(row, 0).toString();
+            String title = bukuTable.getValueAt(row, 1).toString();
+            String author = bukuTable.getValueAt(row, 2).toString();
+            String synopsis = bukuTable.getValueAt(row, 3).toString();
+            String pages = bukuTable.getValueAt(row, 4).toString();
+            tfKodeBuku.setText(code);
+            tfJudulBuku.setText(title);
+            tfPengarang.setText(author);
+            taSinopsis.setText(synopsis);
+            tfJmlHal.setText(pages);
+            statusEdit = true;
+            bAddUpdate.setText("Update");
+            bDelete.setEnabled(true);
+            activeRow = row;
+        }
+    }//GEN-LAST:event_bukuTableMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -397,7 +412,6 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JButton bClear;
     private javax.swing.JButton bDelete;
     private javax.swing.JTable bukuTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
