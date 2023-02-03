@@ -7,7 +7,6 @@ public class Borrow extends javax.swing.JFrame {
 
     String URL_WITH_DB = "jdbc:mysql://localhost:3306/perpustakaan?autoReconnect=true&useSSL=false";
     Statement stmt = null;
-    PreparedStatement ps = null;
     Connection conn = null;
     ResultSet rs;
 
