@@ -30,11 +30,11 @@ public class Login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         bDaftar = new javax.swing.JButton();
         tfUsername = new javax.swing.JTextField();
-        tfPassword = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         bLogin = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        tfPass = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,9 +63,6 @@ public class Login extends javax.swing.JFrame {
         tfUsername.setBackground(new java.awt.Color(244, 241, 235));
         tfUsername.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
 
-        tfPassword.setBackground(new java.awt.Color(244, 241, 235));
-        tfPassword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
-
         jLabel5.setFont(new java.awt.Font("Berlin Sans FB", 0, 12)); // NOI18N
         jLabel5.setText("Username");
 
@@ -85,6 +82,9 @@ public class Login extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Berlin Sans FB", 0, 16)); // NOI18N
         jLabel7.setText("that will help libraries and librarians to do their job easily and quickly. ");
+
+        tfPass.setBackground(new java.awt.Color(244, 241, 235));
+        tfPass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 2, true));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -109,11 +109,12 @@ public class Login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(bDaftar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6)))
+                                .addComponent(tfPass, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(bLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                    .addComponent(tfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))))
                         .addGap(250, 250, 250))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -129,13 +130,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(tfPass, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(bLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(bDaftar))
@@ -158,12 +159,11 @@ public class Login extends javax.swing.JFrame {
 
     private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
         String username = tfUsername.getText();
-        String password = tfPassword.getText();
+        String password = tfPass.getText();
 
         try {
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
             stmt = conn.createStatement();
-//            rs = stmt.executeQuery("SELECT * FROM user");
             String query = "SELECT * FROM user WHERE username=? AND password=?";
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
@@ -241,7 +241,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField tfPassword;
+    private javax.swing.JPasswordField tfPass;
     private javax.swing.JTextField tfUsername;
     // End of variables declaration//GEN-END:variables
 }
