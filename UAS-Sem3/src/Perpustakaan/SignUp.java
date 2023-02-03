@@ -153,9 +153,8 @@ public class SignUp extends javax.swing.JFrame {
                     exist = true;
                     JOptionPane.showMessageDialog(null, "Username and Password exist!");
                 }
-
             }
-            rs.close();
+            
             if (!exist) {
                 int hsl = stmt.executeUpdate("INSERT INTO user " + "(username,password,position) " + "VALUES ('" + username + "', '" + password + "', 'user')");
 
@@ -163,16 +162,14 @@ public class SignUp extends javax.swing.JFrame {
                 tfUsername.setText("");
                 tfPassword.setText("");
             }
-            stmt.close();
             conn.close();
+            stmt.close();
+            rs.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_bSignUpActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

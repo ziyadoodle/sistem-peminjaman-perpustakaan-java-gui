@@ -148,8 +148,10 @@ public class Borrow extends javax.swing.JFrame {
                 tfKodeBuku.setText("");
                 tfTgl.setText("");
             }
-
+            conn.close();
+            stmt.close();
             rs.close();
+            this.dispose();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

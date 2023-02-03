@@ -255,6 +255,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                     int hsl = stmt.executeUpdate("INSERT INTO buku " + "(kode_buku,judul,pengarang,sinopsis,jml_halaman) " + "VALUES ('" + tfKodeBuku.getText() + "', '" + tfJudulBuku.getText() + "', '" + tfPengarang.getText() + "', '" + taSinopsis.getText() + "', '" + tfJmlHal.getText() + "')");
                     stmt.close();
                     conn.close();
+                    rs.close();
                 } catch (SQLException e) {
                     System.out.println(e.getMessage());
                 }
@@ -279,8 +280,10 @@ public class HomeAdmin extends javax.swing.JFrame {
                     ps.setString(4, taSinopsis.getText());
                     ps.setString(5, tfJmlHal.getText());
                 }
+                JOptionPane.showMessageDialog(null, "Update success!");
                 ps.executeUpdate();
                 conn.close();
+                stmt.close();
                 ps.close();
                 rs.close();
             } catch (SQLException e) {
@@ -319,6 +322,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                 }
                 ps.executeUpdate();
                 conn.close();
+                stmt.close();
                 ps.close();
                 rs.close();
             } catch (SQLException e) {
