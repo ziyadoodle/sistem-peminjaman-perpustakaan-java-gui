@@ -163,7 +163,7 @@ public class Login extends javax.swing.JFrame {
         try {
             conn = DriverManager.getConnection(URL_WITH_DB, "root", "");
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM user");
+//            rs = stmt.executeQuery("SELECT * FROM user");
             String query = "SELECT * FROM user WHERE username=? AND password=?";
             ps = conn.prepareStatement(query);
             ps.setString(1, username);

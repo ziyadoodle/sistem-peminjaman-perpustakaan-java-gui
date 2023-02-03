@@ -128,29 +128,33 @@ public class Borrow extends javax.swing.JFrame {
             stmt = conn.createStatement();
 
             boolean existBook = false;
-            
+
             rs = stmt.executeQuery("SELECT * FROM buku");
             while (rs.next()) {
                 if (kode.equals(rs.getString("kode_buku"))) {
                     existBook = true;
                 }
             }
-            
-            if(!existBook) {
+
+            if (!existBook) {
                 JOptionPane.showMessageDialog(null, "Books Code is not exist!");
             }
-            
-            if(existBook == true) {
-                int hsl = stmt.executeUpdate("INSERT INTO peminjaman " + "(nama_peminjam,kode_buku,tgl_pinjam) " + "VALUES ('" + user + "', '" + kode + "', '" + tgl + "')");
-                JOptionPane.showMessageDialog(null, "book was successfully borrowed!");
-                tfNamaPeminjam.setText("");
-                tfKodeBuku.setText("");
-                tfTgl.setText("");
+
+            if (existBook == true) {
+                if (!tfNamaPeminjam.getText().equals("") && !tfTgl.getText().equals("")) {
+                    int hsl = stmt.executeUpdate("INSERT INTO peminjaman " + "(nama_peminjam,kode_buku,tgl_pinjam) " + "VALUES ('" + user + "', '" + kode + "', '" + tgl + "')");
+                    JOptionPane.showMessageDialog(null, "book was successfully borrowed!");
+                    tfNamaPeminjam.setText("");
+                    tfKodeBuku.setText("");
+                    tfTgl.setText("");
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "isi semua data!");
+                }
             }
             conn.close();
             stmt.close();
             rs.close();
-            this.dispose();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

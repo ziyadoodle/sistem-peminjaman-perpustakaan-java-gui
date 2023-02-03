@@ -13,6 +13,7 @@ public class HomeAdmin extends javax.swing.JFrame {
     ResultSet rs;
 
     DefaultTableModel tabelModel;
+    
     boolean statusEdit = false;
     int activeRow = 0;
 
@@ -54,7 +55,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         taSinopsis = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         bukuTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        bShowBorrowList = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -135,12 +136,12 @@ public class HomeAdmin extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(bukuTable);
 
-        jButton1.setBackground(new java.awt.Color(102, 81, 61));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Lihat List Peminjaman");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        bShowBorrowList.setBackground(new java.awt.Color(102, 81, 61));
+        bShowBorrowList.setForeground(new java.awt.Color(255, 255, 255));
+        bShowBorrowList.setText("Lihat List Peminjaman");
+        bShowBorrowList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                bShowBorrowListActionPerformed(evt);
             }
         });
 
@@ -156,7 +157,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(bShowBorrowList)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -218,7 +219,7 @@ public class HomeAdmin extends javax.swing.JFrame {
                     .addComponent(bClear, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bShowBorrowList, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
@@ -314,6 +315,7 @@ public class HomeAdmin extends javax.swing.JFrame {
         tfKodeBuku.requestFocus();
         statusEdit = false;
         bAddUpdate.setText("Add");
+        bDelete.setEnabled(false);
     }//GEN-LAST:event_bClearActionPerformed
 
     private void bDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDeleteActionPerformed
@@ -389,9 +391,9 @@ public class HomeAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_bukuTableMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void bShowBorrowListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bShowBorrowListActionPerformed
         new BorrowList().setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_bShowBorrowListActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -429,8 +431,8 @@ public class HomeAdmin extends javax.swing.JFrame {
     private javax.swing.JButton bAddUpdate;
     private javax.swing.JButton bClear;
     private javax.swing.JButton bDelete;
+    private javax.swing.JButton bShowBorrowList;
     private javax.swing.JTable bukuTable;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
