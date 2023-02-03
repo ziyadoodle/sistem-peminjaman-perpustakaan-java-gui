@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 02, 2023 at 03:07 AM
+-- Generation Time: Feb 03, 2023 at 02:20 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -29,13 +29,12 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `buku` (
   `id` int NOT NULL,
-  `kode_buku` varchar(50) NOT NULL,
-  `judul` varchar(255) NOT NULL,
-  `pengarang` varchar(50) NOT NULL,
-  `sinopsis` varchar(255) NOT NULL,
-  `jml_halaman` int NOT NULL,
-  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `kode_buku` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `judul` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `pengarang` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `sinopsis` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `jml_halaman` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,10 +44,10 @@ CREATE TABLE `buku` (
 
 CREATE TABLE `peminjaman` (
   `id` int NOT NULL,
-  `nama_peminjam` varchar(50) NOT NULL,
-  `kode_buku` varchar(50) NOT NULL,
-  `tgl_pinjam` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `nama_peminjam` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `kode_buku` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `tgl_pinjam` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -58,10 +57,10 @@ CREATE TABLE `peminjaman` (
 
 CREATE TABLE `user` (
   `id` int NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `position` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `username` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `position` varchar(50) COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
